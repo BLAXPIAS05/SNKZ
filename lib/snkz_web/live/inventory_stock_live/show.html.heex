@@ -1,0 +1,25 @@
+<.header>
+  Inventory stock <%= @inventory_stock.id %>
+  <:subtitle>This is a inventory_stock record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/in_stock/#{@inventory_stock}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit inventory_stock</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+</.list>
+
+<.back navigate={~p"/in_stock"}>Back to in_stock</.back>
+
+<.modal :if={@live_action == :edit} id="inventory_stock-modal" show on_cancel={JS.patch(~p"/in_stock/#{@inventory_stock}")}>
+  <.live_component
+    module={SnkzWeb.InventoryStockLive.FormComponent}
+    id={@inventory_stock.id}
+    title={@page_title}
+    action={@live_action}
+    inventory_stock={@inventory_stock}
+    patch={~p"/in_stock/#{@inventory_stock}"}
+  />
+</.modal>
