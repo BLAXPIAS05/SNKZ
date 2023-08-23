@@ -18,7 +18,7 @@ defmodule Snkz.InStock.InventoryStock do
   @doc false
   def changeset(inventory_stock, attrs) do
     inventory_stock
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:color, :size, :price, :user_id, :product_id])
+    |> validate_required([:color, :size, :price, :user_id, :product_id])
   end
 end

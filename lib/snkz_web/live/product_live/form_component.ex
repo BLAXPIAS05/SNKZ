@@ -20,6 +20,8 @@ defmodule SnkzWeb.ProductLive.FormComponent do
         phx-submit="save"
       >
 
+        <.input field={@form[:title]} type="text" label="Title" />
+        <.input field={@form[:description]} type="textarea" label="Description" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Product</.button>
         </:actions>

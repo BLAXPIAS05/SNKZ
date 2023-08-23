@@ -17,5 +17,6 @@ defmodule SnkzWeb.ProductLive.Show do
   end
 
   defp page_title(:show), do: "Show Product"
+  defp page_title(:sell), do: "Sell Product"
   defp page_title(:edit), do: "Edit Product"
 end

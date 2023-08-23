@@ -1,19 +1,31 @@
 <.header>
-  Product <%= @product.id %>
-  <:subtitle>This is a product record from your database.</:subtitle>
+  <%= @product.title %>
   <:actions>
-    <.link patch={~p"/products/#{@product}/show/edit"} phx-click={JS.push_focus()}>
+    <%!-- <.link patch={~p"/products/#{@product}/show/edit"} phx-click={JS.push_focus()}>
       <.button>Edit product</.button>
-    </.link>
+    </.link> --%>
   </:actions>
 </.header>
 
-<.list>
-</.list>
+<img src=""/>
+
+<%!-- <.list>
+  <:item title="Title"> <%= @product.title %> </:item>
+  <:item title="Description"> <%= @product.description %> </:item>
+</.list> --%>
+
+<.link patch={~p"/products/#{@product}/sell"} phx-click={JS.push_focus()}>
+  <.button>Sell</.button>
+</.link>
 
 <.back navigate={~p"/products"}>Back to products</.back>
 
-<.modal :if={@live_action == :edit} id="product-modal" show on_cancel={JS.patch(~p"/products/#{@product}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="product-modal"
+  show
+  on_cancel={JS.patch(~p"/products/#{@product}")}
+>
   <.live_component
     module={SnkzWeb.ProductLive.FormComponent}
     id={@product.id}
@@ -23,3 +35,21 @@
     patch={~p"/products/#{@product}"}
   />
 </.modal>
+
+<.modal
+  :if={@live_action == :sell}
+  id="sell-modal"
+  show
+  on_cancel={JS.patch(~p"/products/#{@product}")}
+>
+<.live_component
+    module={SnkzWeb.ProductLive.InStockComponent}
+    id={@product.id}
+    title={@page_title}
+    action={@live_action}
+    in_stock={%Snkz.InStock.InventoryStock{}}
+    current_user={@current_user}
+    patch={~p"/products/#{@product}"}
+  />
+</.modal>
+

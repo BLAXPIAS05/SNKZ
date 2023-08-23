@@ -7,6 +7,7 @@ defmodule Snkz.Products do
   alias Snkz.Repo
 
   alias Snkz.Products.Product
+  alias Snkz.Products.Image
 
   @doc """
   Returns the list of products.
@@ -19,6 +20,11 @@ defmodule Snkz.Products do
   """
   def list_products do
     Repo.all(Product)
+  end
+
+  def list_images(product_id) do
+
+    Repo.all(from i in Image, where: i.product_id == ^product_id)
   end
 
   @doc """
