@@ -6,11 +6,11 @@ defmodule Snkz.InStock.InventoryStock do
   alias Snkz.Accounts.User
 
   schema "in_stock" do
-    field :color
-    field :size
-    field :price, :decimal
-    belongs_to :product, Product
-    belongs_to :user, User
+    field(:color)
+    field(:size)
+    field(:price, :decimal)
+    belongs_to(:product, Product)
+    belongs_to(:user, User)
 
     timestamps()
   end

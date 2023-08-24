@@ -1,40 +1,18 @@
 <.header>
   <%= @product.title %>
-  <:actions>
-    <%!-- <.link patch={~p"/products/#{@product}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit product</.button>
-    </.link> --%>
-  </:actions>
 </.header>
 
-<img src=""/>
+<img src={@current_image.image_url} />
 
-<%!-- <.list>
-  <:item title="Title"> <%= @product.title %> </:item>
-  <:item title="Description"> <%= @product.description %> </:item>
-</.list> --%>
+<div :for={image <- @product.images} class="w-20 h-20">
+  <img src={image.image_url} />
+</div>
 
 <.link patch={~p"/products/#{@product}/sell"} phx-click={JS.push_focus()}>
   <.button>Sell</.button>
 </.link>
 
 <.back navigate={~p"/products"}>Back to products</.back>
-
-<.modal
-  :if={@live_action == :edit}
-  id="product-modal"
-  show
-  on_cancel={JS.patch(~p"/products/#{@product}")}
->
-  <.live_component
-    module={SnkzWeb.ProductLive.FormComponent}
-    id={@product.id}
-    title={@page_title}
-    action={@live_action}
-    product={@product}
-    patch={~p"/products/#{@product}"}
-  />
-</.modal>
 
 <.modal
   :if={@live_action == :sell}

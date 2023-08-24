@@ -10,10 +10,13 @@ defmodule SnkzWeb.ProductLive.Show do
 
   @impl true
   def handle_params(%{"id" => id}, _, socket) do
+    product = Products.get_product!(id)
+
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:product, Products.get_product!(id))}
+     |> assign(:product, product)
+     |> assign(:current_image, List.first(product.images))}
   end
 
   defp page_title(:show), do: "Show Product"

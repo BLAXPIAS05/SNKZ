@@ -22,10 +22,9 @@ defmodule Snkz.Products do
     Repo.all(Product)
   end
 
-  def list_images(product_id) do
-
-    Repo.all(from i in Image, where: i.product_id == ^product_id)
-  end
+  # def list_images(product_id) do
+  #   Repo.all(from i in Image, where: i.product_id == ^product_id)
+  # end
 
   @doc """
   Gets a single product.
@@ -41,7 +40,7 @@ defmodule Snkz.Products do
       ** (Ecto.NoResultsError)
 
   """
-  def get_product!(id), do: Repo.get!(Product, id)
+  def get_product!(id), do: Repo.get!(Product, id) |> Repo.preload([:in_stock, :images])
 
   @doc """
   Creates a product.
