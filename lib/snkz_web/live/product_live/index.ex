@@ -44,4 +44,8 @@ defmodule SnkzWeb.ProductLive.Index do
 
     {:noreply, stream_delete(socket, :products, product)}
   end
+
+  # def handle_event("select product", %{"id" => id}, socket) do
+  #   {:noreply, push_navigate(socket, to: ~p"/products/#{id}")}
+  # end
 end

@@ -7,8 +7,9 @@ defmodule Snkz.Products.Product do
 
   schema "products" do
     field :title
-    field :size, {:array, :string}
+    field :colors, {:array, :string}
     field :description
+
     has_many :in_stock, InventoryStock
     has_many :images, Image
 
@@ -18,7 +19,7 @@ defmodule Snkz.Products.Product do
   @doc false
   def changeset(product, attrs) do
     product
-    |> cast(attrs, [:title, :description])
-    |> validate_required([:title, :description])
+    |> cast(attrs, [:title, :description, :colors])
+    |> validate_required([:title, :description, :colors])
   end
 end

@@ -19,6 +19,10 @@ defmodule SnkzWeb.ProductLive.Show do
      |> assign(:current_image, List.first(product.images))}
   end
 
+  def handle_event("select image", %{"id" => id}, socket) do
+    {:noreply, socket}
+  end
+
   defp page_title(:show), do: "Show Product"
   defp page_title(:sell), do: "Sell Product"
   defp page_title(:edit), do: "Edit Product"

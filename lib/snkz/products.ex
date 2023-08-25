@@ -9,6 +9,12 @@ defmodule Snkz.Products do
   alias Snkz.Products.Product
   alias Snkz.Products.Image
 
+  defp sorted_images_query do
+      from i in Image,
+         join: p in Product,
+         on: i.product_id == p.id,
+         order_by: fragment("ARRAY_POSITION(?, ?)", p.colors, i.color)
+  end
   @doc """
   Returns the list of products.
 
@@ -20,6 +26,7 @@ defmodule Snkz.Products do
   """
   def list_products do
     Repo.all(Product)
+    |> Repo.preload([images: sorted_images_query()])
   end
 
   # def list_images(product_id) do
@@ -40,7 +47,10 @@ defmodule Snkz.Products do
       ** (Ecto.NoResultsError)
 
   """
-  def get_product!(id), do: Repo.get!(Product, id) |> Repo.preload([:in_stock, :images])
+  def get_product!(id) do
+    Repo.get!(Product, id)
+    |> Repo.preload([:in_stock, images: sorted_images_query()])
+  end
 
   @doc """
   Creates a product.
