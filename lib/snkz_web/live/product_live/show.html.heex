@@ -2,10 +2,14 @@
   <%= @product.title %>
 </.header>
 
-<img src={@current_image.image_url} />
+<div class="my-10">
+  <img class="mx-auto w-3/4" src={@current_image.image_url} />
 
-<div :for={image <- @product.images} class="w-20 h-20" phx-click={"select image"} phx-value-id={image.id}>
-  <img src={image.image_url} />
+  <div class="flex flex-row justify-center">
+    <div :for={image <- @product.images} class="w-20 h-20" phx-click={"select image"} phx-value-id={image.id}>
+      <img src={image.image_url} />
+    </div>
+  </div>
 </div>
 
 <.link patch={~p"/products/#{@product}/sell"} phx-click={JS.push_focus()}>

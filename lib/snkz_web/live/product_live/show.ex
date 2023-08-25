@@ -19,8 +19,9 @@ defmodule SnkzWeb.ProductLive.Show do
      |> assign(:current_image, List.first(product.images))}
   end
 
-  def handle_event("select image", %{"id" => id}, socket) do
-    {:noreply, socket}
+  def handle_event("select image", %{"id" => id}, %{assigns: %{product: product}} = socket) do
+    image = Enum.find(product.images, fn i -> to_string(i.id) == id end)
+    {:noreply, socket |> assign(current_image: image)}
   end
 
   defp page_title(:show), do: "Show Product"
