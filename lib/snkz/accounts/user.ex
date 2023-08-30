@@ -2,15 +2,15 @@ defmodule Snkz.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Snkz.InStock.InventoryStock
+  alias Snkz.Products.InStock
 
   schema "users" do
-    field :username, :string
-    field :email, :string
-    field :password, :string, virtual: true, redact: true
-    field :hashed_password, :string, redact: true
-    field :confirmed_at, :naive_datetime
-    has_many :in_stock, InventoryStock
+    field(:username, :string)
+    field(:email, :string)
+    field(:password, :string, virtual: true, redact: true)
+    field(:hashed_password, :string, redact: true)
+    field(:confirmed_at, :naive_datetime)
+    has_many(:in_stock, InStock)
 
     timestamps()
   end

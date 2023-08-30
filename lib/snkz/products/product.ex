@@ -2,16 +2,16 @@ defmodule Snkz.Products.Product do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Snkz.InStock.InventoryStock
+  alias Snkz.Products.InStock
   alias Snkz.Products.Image
 
   schema "products" do
-    field :title
-    field :colors, {:array, :string}
-    field :description
+    field(:title)
+    field(:colors, {:array, :string})
+    field(:description)
 
-    has_many :in_stock, InventoryStock
-    has_many :images, Image
+    has_many(:in_stock, InStock)
+    has_many(:images, Image)
 
     timestamps()
   end

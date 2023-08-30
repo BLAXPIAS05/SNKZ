@@ -29,7 +29,7 @@
     id={@product.id}
     title={@page_title}
     action={@live_action}
-    in_stock={%Snkz.InStock.InventoryStock{}}
+    in_stock={%Snkz.Products.InStock{}}
     current_user={@current_user}
     patch={~p"/products/#{@product}"}
   />
