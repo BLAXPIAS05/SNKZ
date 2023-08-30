@@ -10,18 +10,23 @@ defmodule Snkz.InStockFixtures do
   @doc """
   Generate a inventory_stock.
   """
+  alias Snkz.{AccountsFixtures, ProductsFixtures}
+
+  @colors ~w(white red blue green)
+  @sizes ~w(7 7.5 8 8.5 9 9.5 10 10.5 11 11.5 12 12.5 13 13.5 14 14.5 15)
+
   def inventory_stock_fixture(attrs \\ %{}) do
-    user = AccountsFixtures.user_fixture()
     product = ProductsFixtures.product_fixture()
+    user = AccountsFixtures.user_fixture()
 
     {:ok, inventory_stock} =
       attrs
       |> Enum.into(%{
-        color: "red",
-        size: "10",
-        price: "100",
-        user_id: user.id,
-        product_id: product.id
+        color: Enum.random(@colors),
+        size: Enum.random(@sizes),
+        price: Enum.random(70..250),
+        product_id: product.id,
+        user_id: user.id
       })
       |> Snkz.Inventory.create_inventory_stock()
 

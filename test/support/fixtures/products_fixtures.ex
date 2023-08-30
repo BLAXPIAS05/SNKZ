@@ -7,6 +7,8 @@ defmodule Snkz.ProductsFixtures do
   @doc """
   Generate a product.
   """
+  @colors ~w(white red blue green)
+
   def product_fixture(attrs \\ %{}) do
     {:ok, product} =
       attrs

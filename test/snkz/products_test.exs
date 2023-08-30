@@ -20,8 +20,8 @@ defmodule Snkz.ProductsTest do
       assert Products.get_product!(product.id) == product
     end
 
-    # test "create_product/1 with valid data creates a product" do
-    #   valid_attrs = %{}
+    test "create_product/1 with valid data creates a product" do
+      valid_attrs = %{}
 
     #   assert {:ok, %Product{} = product} = Products.create_product(valid_attrs)
     # end
@@ -30,9 +30,9 @@ defmodule Snkz.ProductsTest do
     #   assert {:error, %Ecto.Changeset{}} = Products.create_product(@invalid_attrs)
     # end
 
-    # test "update_product/2 with valid data updates the product" do
-    #   product = product_fixture()
-    #   update_attrs = %{}
+    test "update_product/2 with valid data updates the product" do
+      product = product_fixture()
+      update_attrs = %{}
 
     #   assert {:ok, %Product{} = product} = Products.update_product(product, update_attrs)
     # end

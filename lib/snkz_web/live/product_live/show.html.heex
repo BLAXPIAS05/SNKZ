@@ -12,9 +12,33 @@
   </div>
 </div>
 
+<div class="mb-10" >
+  <form phx-change="select size">
+  <select
+    name="size"
+    class="mt-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
+  >
+    <option value="">Size</option>
+    <%= Phoenix.HTML.Form.options_for_select(available_sizes(@product, @current_image), "") %>
+  </select>
+  </form>
+</div>
+
 <.link patch={~p"/products/#{@product}/sell"} phx-click={JS.push_focus()}>
   <.button>Sell</.button>
 </.link>
+
+<.link patch={~p"/products/#{@product}/#{@in_stock}/buy"} phx-click={JS.push_focus()} :if={@in_stock}>
+  <.button>Buy</.button>
+</.link>
+
+<h1 class="mt-8 mb-4">
+Description
+</h1>
+
+<div>
+  <%= @product.description %>
+</div>
 
 <.back navigate={~p"/products"}>Back to products</.back>
 
@@ -25,11 +49,30 @@
   on_cancel={JS.patch(~p"/products/#{@product}")}
 >
 <.live_component
-    module={SnkzWeb.ProductLive.InStockComponent}
+    module={SnkzWeb.ProductLive.SellComponent}
     id={@product.id}
     title={@page_title}
     action={@live_action}
     in_stock={%Snkz.Products.InStock{}}
+    current_user={@current_user}
+    patch={~p"/products/#{@product}"}
+  />
+</.modal>
+
+<.modal
+  :if={@in_stock && @live_action == :buy}
+  id="buy-modal"
+  show
+  on_cancel={JS.patch(~p"/products/#{@product}")}
+>
+<.live_component
+    module={SnkzWeb.ProductLive.BuyComponent}
+    id={@in_stock.id}
+    title={@page_title}
+    action={@live_action}
+    in_stock={@in_stock}
+    product={@product}
+    image={@current_image}
     current_user={@current_user}
     patch={~p"/products/#{@product}"}
   />

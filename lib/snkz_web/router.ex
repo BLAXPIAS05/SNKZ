@@ -27,6 +27,7 @@ defmodule SnkzWeb.Router do
       live("/products/new", ProductLive.Index, :new)
       live("/products/:id/edit", ProductLive.Show, :edit)
       live("/products/:id/sell", ProductLive.Show, :sell)
+      live("/products/:id/:stock_id/buy", ProductLive.Show, :buy)
       live("/products/:id", ProductLive.Show, :show)
     end
   end

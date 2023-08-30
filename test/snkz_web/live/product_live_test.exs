@@ -4,8 +4,8 @@ defmodule SnkzWeb.ProductLiveTest do
   import Phoenix.LiveViewTest
   import Snkz.ProductsFixtures
 
-  @create_attrs %{}
-  @update_attrs %{}
+  @create_attrs %{title: "Title", description: "Description"}
+  @update_attrs %{title: "Updated Title", description: "Updated Description"}
   @invalid_attrs %{}
 
   defp create_product(_) do

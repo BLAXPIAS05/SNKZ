@@ -1,4 +1,4 @@
-defmodule SnkzWeb.ProductLive.InStockComponent do
+defmodule SnkzWeb.ProductLive.SellComponent do
   use SnkzWeb, :live_component
 
   alias Snkz.Inventory
@@ -68,21 +68,6 @@ defmodule SnkzWeb.ProductLive.InStockComponent do
       })
 
     save_in_stock(socket, socket.assigns.action, params)
-  end
-
-  defp save_in_stock(socket, :edit, in_stock_params) do
-    case InStock.update_inventory_stock(socket.assigns.in_stock, in_stock_params) do
-      {:ok, in_stock} ->
-        notify_parent({:saved, in_stock})
-
-        {:noreply,
-         socket
-         |> put_flash(:info, "Product updated successfully")
-         |> push_patch(to: socket.assigns.patch)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
-    end
   end
 
   defp save_in_stock(socket, :sell, in_stock_params) do
