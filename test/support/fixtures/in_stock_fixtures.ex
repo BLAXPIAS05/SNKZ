@@ -1,7 +1,10 @@
 defmodule Snkz.InStockFixtures do
+  alias Snkz.AccountsFixtures
+  alias Snkz.ProductsFixtures
+
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Snkz.InStock` context.
+  entities via the `Snkz.Inventory` context.
   """
 
   @doc """
@@ -25,7 +28,7 @@ defmodule Snkz.InStockFixtures do
         product_id: product.id,
         user_id: user.id
       })
-      |> Snkz.InStock.create_inventory_stock()
+      |> Snkz.Inventory.create_inventory_stock()
 
     inventory_stock
   end

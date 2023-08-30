@@ -1,0 +1,23 @@
+<.header>
+  Your Cart
+</.header>
+
+<div class="p-8 grid grid-cols-3 gap-10">
+  <.link :for={product <- Products.list_products()} navigate={~p"/products/#{product.id}"}>
+  <div>
+    <%= product.title %>
+    <img src={Enum.at(product.images, 0).image_url} />
+  </div>
+  </.link>
+</div>
+
+<.modal :if={@live_action in [:new, :edit]} id="product-modal" show on_cancel={JS.patch(~p"/products")}>
+  <.live_component
+    module={SnkzWeb.ProductLive.FormComponent}
+    id={@product.id || :new}
+    title={@page_title}
+    action={@live_action}
+    product={@product}
+    patch={~p"/products"}
+  />
+</.modal>

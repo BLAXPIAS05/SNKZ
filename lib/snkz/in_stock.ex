@@ -1,4 +1,4 @@
-defmodule Snkz.InStock do
+defmodule Snkz.Inventory do
   @moduledoc """
   The InStock context.
   """
@@ -6,7 +6,7 @@ defmodule Snkz.InStock do
   import Ecto.Query, warn: false
   alias Snkz.Repo
 
-  alias Snkz.InStock.InventoryStock
+  alias Snkz.Products.InStock
 
   @doc """
   Returns the list of in_stock.
@@ -14,11 +14,11 @@ defmodule Snkz.InStock do
   ## Examples
 
       iex> list_in_stock()
-      [%InventoryStock{}, ...]
+      [%InStock{}, ...]
 
   """
   def list_in_stock do
-    Repo.all(InventoryStock)
+    Repo.all(InStock)
   end
 
   @doc """
@@ -29,13 +29,13 @@ defmodule Snkz.InStock do
   ## Examples
 
       iex> get_inventory_stock!(123)
-      %InventoryStock{}
+      %InStock{}
 
       iex> get_inventory_stock!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_inventory_stock!(id), do: Repo.get!(InventoryStock, id) |> Repo.preload(:product)
+  def get_inventory_stock!(id), do: Repo.get!(InventoryStock, id)
 
   @doc """
   Creates a inventory_stock.
@@ -43,15 +43,15 @@ defmodule Snkz.InStock do
   ## Examples
 
       iex> create_inventory_stock(%{field: value})
-      {:ok, %InventoryStock{}}
+      {:ok, %InStock{}}
 
       iex> create_inventory_stock(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
   def create_inventory_stock(attrs \\ %{}) do
-    %InventoryStock{}
-    |> InventoryStock.changeset(attrs)
+    %InStock{}
+    |> InStock.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -61,15 +61,15 @@ defmodule Snkz.InStock do
   ## Examples
 
       iex> update_inventory_stock(inventory_stock, %{field: new_value})
-      {:ok, %InventoryStock{}}
+      {:ok, %InStock{}}
 
       iex> update_inventory_stock(inventory_stock, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_inventory_stock(%InventoryStock{} = inventory_stock, attrs) do
+  def update_inventory_stock(%InStock{} = inventory_stock, attrs) do
     inventory_stock
-    |> InventoryStock.changeset(attrs)
+    |> InStock.changeset(attrs)
     |> Repo.update()
   end
 
@@ -79,13 +79,13 @@ defmodule Snkz.InStock do
   ## Examples
 
       iex> delete_inventory_stock(inventory_stock)
-      {:ok, %InventoryStock{}}
+      {:ok, %InStock{}}
 
       iex> delete_inventory_stock(inventory_stock)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_inventory_stock(%InventoryStock{} = inventory_stock) do
+  def delete_inventory_stock(%InStock{} = inventory_stock) do
     Repo.delete(inventory_stock)
   end
 
@@ -95,10 +95,10 @@ defmodule Snkz.InStock do
   ## Examples
 
       iex> change_inventory_stock(inventory_stock)
-      %Ecto.Changeset{data: %InventoryStock{}}
+      %Ecto.Changeset{data: %InStock{}}
 
   """
-  def change_inventory_stock(%InventoryStock{} = inventory_stock, attrs \\ %{}) do
-    InventoryStock.changeset(inventory_stock, attrs)
+  def change_inventory_stock(%InStock{} = inventory_stock, attrs \\ %{}) do
+    InStock.changeset(inventory_stock, attrs)
   end
 end

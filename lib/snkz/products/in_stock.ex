@@ -1,4 +1,4 @@
-defmodule Snkz.InStock.InventoryStock do
+defmodule Snkz.Products.InStock do
   use Ecto.Schema
   import Ecto.Changeset
 

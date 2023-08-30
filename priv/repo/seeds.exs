@@ -35,7 +35,6 @@ images = %{"white" => "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAA
 #       title: "#{brand} #{model} #{modifier}",
 #       description: "A cool shoe"
 #     })
-
 #   for {color, image} <- images do
 #     Repo.insert!(%Image{
 #       product_id: product.id,

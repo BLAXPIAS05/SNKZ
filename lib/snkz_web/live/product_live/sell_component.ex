@@ -1,7 +1,7 @@
 defmodule SnkzWeb.ProductLive.SellComponent do
   use SnkzWeb, :live_component
 
-  alias Snkz.InStock
+  alias Snkz.Inventory
 
   @impl true
   def render(assigns) do
@@ -45,7 +45,12 @@ defmodule SnkzWeb.ProductLive.SellComponent do
   @impl true
   def handle_event("validate", %{"inventory_stock" => in_stock_params}, socket) do
     params =
-      in_stock_params |> Map.merge(%{"user_id" => socket.assigns.current_user.id, "product_id" => socket.assigns.id})
+      in_stock_params
+      |> Map.merge(%{
+        "user_id" => socket.assigns.current_user.id,
+        "product_id" => socket.assigns.id
+      })
+
     changeset =
       socket.assigns.in_stock
       |> InStock.change_inventory_stock(params)
@@ -56,7 +61,11 @@ defmodule SnkzWeb.ProductLive.SellComponent do
 
   def handle_event("save", %{"inventory_stock" => in_stock_params}, socket) do
     params =
-      in_stock_params |> Map.merge(%{"user_id" => socket.assigns.current_user.id, "product_id" => socket.assigns.id})
+      in_stock_params
+      |> Map.merge(%{
+        "user_id" => socket.assigns.current_user.id,
+        "product_id" => socket.assigns.id
+      })
 
     save_in_stock(socket, socket.assigns.action, params)
   end

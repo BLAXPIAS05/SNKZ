@@ -13,9 +13,9 @@ defmodule Snkz.ProductsFixtures do
     {:ok, product} =
       attrs
       |> Enum.into(%{
-        title: "A Test Product",
-        description: "Produces the finest tests ever",
-        colors: @colors
+        title: "test product",
+        description: "test description",
+        colors: ["red", "green", "blue"]
       })
       |> Snkz.Products.create_product()
 

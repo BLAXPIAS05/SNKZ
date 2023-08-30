@@ -12,7 +12,7 @@ defmodule SnkzWeb.ProductLive.Show do
   @impl true
   def handle_params(%{"id" => id} = params, _, socket) do
     product = Products.get_product!(id)
-    
+
     in_stock =
       case Map.get(params, "stock_id") do
         nil -> nil
