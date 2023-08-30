@@ -35,7 +35,7 @@ defmodule Snkz.InStock do
       ** (Ecto.NoResultsError)
 
   """
-  def get_inventory_stock!(id), do: Repo.get!(InventoryStock, id)
+  def get_inventory_stock!(id), do: Repo.get!(InventoryStock, id) |> Repo.preload(:product)
 
   @doc """
   Creates a inventory_stock.

@@ -21,7 +21,7 @@ defmodule Snkz.ProductsTest do
     end
 
     test "create_product/1 with valid data creates a product" do
-      valid_attrs = %{}
+      valid_attrs = %{title: "Title", description: "Description", colors: ~w[red green blue]}
 
       assert {:ok, %Product{} = product} = Products.create_product(valid_attrs)
     end
@@ -32,7 +32,8 @@ defmodule Snkz.ProductsTest do
 
     test "update_product/2 with valid data updates the product" do
       product = product_fixture()
-      update_attrs = %{}
+      update_attrs = %{title: "Updated Title", description: "Updated Description", colors: ~w[updated colors]}
+
 
       assert {:ok, %Product{} = product} = Products.update_product(product, update_attrs)
     end

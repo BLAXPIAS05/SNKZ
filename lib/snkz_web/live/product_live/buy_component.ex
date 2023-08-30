@@ -1,4 +1,4 @@
-defmodule SnkzWeb.ProductLive.InStockComponent do
+defmodule SnkzWeb.ProductLive.BuyComponent do
   use SnkzWeb, :live_component
 
   alias Snkz.InStock
@@ -8,8 +8,10 @@ defmodule SnkzWeb.ProductLive.InStockComponent do
     ~H"""
     <div>
       <.header>
-        Have one to sell?
+        Confirm Purchase
       </.header>
+
+
 
       <.simple_form
         for={@form}
@@ -19,15 +21,14 @@ defmodule SnkzWeb.ProductLive.InStockComponent do
         phx-submit="save"
       >
 
-      <.input field={@form[:size]} type="select" options={["7", "8", "9", "10", "11", "12", "13", "14", "15"]} prompt="select" label="Size"/>
-      <.input field={@form[:color]} type="select" options={["red", "green", "blue"]} prompt="select" label="Color"/>
-        <.input field={@form[:price]} type="number" label="Price" />
-        <.input field={@form[:user_id]} type="hidden" />
-        <.input field={@form[:product_id]} type="hidden" />
-        <:actions>
-          <.button phx-disable-with="Saving...">Save Product</.button>
-        </:actions>
-      </.simple_form>
+      <.input field={@form[:username]}
+
+      <.input field={@form[:user_id]} type="hidden" />
+      <.input field={@form[:product_id]} type="hidden" />
+      <:actions>
+        <.button phx-disable-with="Buying...">Buy Product</.button>
+      </:actions>
+    </.simple_form>
     </div>
     """
   end
@@ -59,21 +60,6 @@ defmodule SnkzWeb.ProductLive.InStockComponent do
       in_stock_params |> Map.merge(%{"user_id" => socket.assigns.current_user.id, "product_id" => socket.assigns.id})
 
     save_in_stock(socket, socket.assigns.action, params)
-  end
-
-  defp save_in_stock(socket, :edit, in_stock_params) do
-    case InStock.update_inventory_stock(socket.assigns.in_stock, in_stock_params) do
-      {:ok, in_stock} ->
-        notify_parent({:saved, in_stock})
-
-        {:noreply,
-         socket
-         |> put_flash(:info, "Product updated successfully")
-         |> push_patch(to: socket.assigns.patch)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
-    end
   end
 
   defp save_in_stock(socket, :sell, in_stock_params) do
