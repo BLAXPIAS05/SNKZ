@@ -71,7 +71,7 @@ defmodule SnkzWeb.ProductLive.SellComponent do
   end
 
   defp save_in_stock(socket, :sell, in_stock_params) do
-    case InStock.create_inventory_stock(in_stock_params) do
+    case Inventory.create_inventory_stock(in_stock_params) do
       {:ok, in_stock} ->
         notify_parent({:saved, in_stock})
 
