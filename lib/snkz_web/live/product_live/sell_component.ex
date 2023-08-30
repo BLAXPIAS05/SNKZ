@@ -34,7 +34,7 @@ defmodule SnkzWeb.ProductLive.SellComponent do
 
   @impl true
   def update(%{in_stock: in_stock} = assigns, socket) do
-    changeset = InStock.change_inventory_stock(in_stock)
+    changeset = Inventory.change_inventory_stock(in_stock)
 
     {:ok,
      socket
@@ -43,7 +43,7 @@ defmodule SnkzWeb.ProductLive.SellComponent do
   end
 
   @impl true
-  def handle_event("validate", %{"inventory_stock" => in_stock_params}, socket) do
+  def handle_event("validate", %{"in_stock" => in_stock_params}, socket) do
     params =
       in_stock_params
       |> Map.merge(%{
@@ -53,13 +53,13 @@ defmodule SnkzWeb.ProductLive.SellComponent do
 
     changeset =
       socket.assigns.in_stock
-      |> InStock.change_inventory_stock(params)
+      |> Inventory.change_inventory_stock(params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
   end
 
-  def handle_event("save", %{"inventory_stock" => in_stock_params}, socket) do
+  def handle_event("save", %{"in_stock" => in_stock_params}, socket) do
     params =
       in_stock_params
       |> Map.merge(%{

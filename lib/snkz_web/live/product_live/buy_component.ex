@@ -1,7 +1,7 @@
 defmodule SnkzWeb.ProductLive.BuyComponent do
   use SnkzWeb, :live_component
 
-  alias Snkz.InStock
+  alias Snkz.Inventory
 
   @impl true
   def render(assigns) do
@@ -35,7 +35,7 @@ defmodule SnkzWeb.ProductLive.BuyComponent do
 
   @impl true
   def update(%{in_stock: in_stock} = assigns, socket) do
-    changeset = InStock.change_inventory_stock(in_stock)
+    changeset = Inventory.change_inventory_stock(in_stock)
 
     {:ok,
      socket
@@ -49,7 +49,7 @@ defmodule SnkzWeb.ProductLive.BuyComponent do
       in_stock_params |> Map.merge(%{"user_id" => socket.assigns.current_user.id, "product_id" => socket.assigns.id})
     changeset =
       socket.assigns.in_stock
-      |> InStock.change_inventory_stock(params)
+      |> Inventory.change_inventory_stock(params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
@@ -63,7 +63,7 @@ defmodule SnkzWeb.ProductLive.BuyComponent do
   end
 
   defp save_in_stock(socket, :sell, in_stock_params) do
-    case InStock.create_inventory_stock(in_stock_params) do
+    case Inventory.create_inventory_stock(in_stock_params) do
       {:ok, in_stock} ->
         notify_parent({:saved, in_stock})
 

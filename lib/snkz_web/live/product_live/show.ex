@@ -2,7 +2,6 @@ defmodule SnkzWeb.ProductLive.Show do
   use SnkzWeb, :live_view
 
   alias Snkz.Products
-  alias Snkz.InStock
 
   @impl true
   def mount(_params, _session, socket) do

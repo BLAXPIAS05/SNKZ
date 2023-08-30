@@ -24,14 +24,20 @@
   </form>
 </div>
 
-<.link patch={~p"/products/#{@product}/sell"} phx-click={JS.push_focus()}>
-  <.button>Sell</.button>
-</.link>
+<div class="grid grid-cols-2 gap-4">
+  <.link patch={~p"/products/#{@product}/sell"} phx-click={JS.push_focus()} :if={@current_user}>
+    <.button class="shadow-[0_15px_5px_gray] w-full">Sell</.button>
+  </.link>
 
-<.link patch={~p"/products/#{@product}/#{@in_stock}/buy"} phx-click={JS.push_focus()} :if={@in_stock}>
-  <.button>Buy</.button>
-</.link>
+  <.button disabled="true" class="bg-zinc-500 hover:bg-zinc-500 w-full" :if={is_nil(@current_user)}>Sell</.button>
 
+  <.link patch={~p"/products/#{@product}/#{@in_stock}/buy"} phx-click={JS.push_focus()} :if={@in_stock && @current_user}>
+    <.button class="shadow-[0_15px_5px_gray] w-full">Buy</.button>
+  </.link>
+
+  <.button disabled="true" class="bg-zinc-500 hover:bg-zinc-500 w-full" :if={is_nil(@in_stock) || is_nil(@current_user)}>Buy</.button>
+
+</div>
 <h1 class="mt-8 mb-4">
 Description
 </h1>
