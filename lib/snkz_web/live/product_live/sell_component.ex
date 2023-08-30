@@ -73,7 +73,7 @@ defmodule SnkzWeb.ProductLive.SellComponent do
   defp save_in_stock(socket, :sell, in_stock_params) do
     case Inventory.create_inventory_stock(in_stock_params) do
       {:ok, in_stock} ->
-        notify_parent({:saved, in_stock})
+        Phoenix.PubSub.broadcast(Snkz.PubSub, "product:#{in_stock.product_id}", {:in_stock_update, in_stock})
 
         {:noreply,
          socket
@@ -88,6 +88,4 @@ defmodule SnkzWeb.ProductLive.SellComponent do
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
     assign(socket, :form, to_form(changeset))
   end
-
-  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end

@@ -10,6 +10,8 @@ defmodule SnkzWeb.ProductLive.Show do
 
   @impl true
   def handle_params(%{"id" => id} = params, _, socket) do
+    Phoenix.PubSub.subscribe(Snkz.PubSub, "product:#{id}")
+
     product = Products.get_product!(id)
 
     in_stock =
@@ -31,6 +33,12 @@ defmodule SnkzWeb.ProductLive.Show do
      |> assign(:in_stock, in_stock)
      |> assign(:current_image, current_image)
     }
+  end
+
+  def handle_info({:in_stock_update, in_stock}, socket) do
+    IO.inspect(in_stock, label: "--------------------------------------")
+
+    {:noreply, socket}
   end
 
   def available_sizes(product, image) do
