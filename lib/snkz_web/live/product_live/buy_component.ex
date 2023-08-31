@@ -21,7 +21,7 @@ defmodule SnkzWeb.ProductLive.BuyComponent do
         phx-submit="save"
       >
 
-      <.input field={@form[:username]}
+      <.input field={@form[:username]} />
 
       <.input field={@form[:user_id]} type="hidden" />
       <.input field={@form[:product_id]} type="hidden" />

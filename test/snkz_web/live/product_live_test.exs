@@ -10,6 +10,8 @@ defmodule SnkzWeb.ProductLiveTest do
 
   defp create_product(_) do
     product = product_fixture()
+    image_fixture(product)
+
     %{product: product}
   end
 
