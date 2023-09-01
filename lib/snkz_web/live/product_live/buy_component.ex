@@ -21,12 +21,12 @@ defmodule SnkzWeb.ProductLive.BuyComponent do
         phx-submit="save"
       >
 
-      <.input field={@form[:username]} />
-
       <.input field={@form[:user_id]} type="hidden" />
       <.input field={@form[:product_id]} type="hidden" />
       <:actions>
+      <%!-- <.link patch={~p""}> --%>
         <.button phx-disable-with="Buying...">Buy Product</.button>
+      <%!-- </.link> --%>
       </:actions>
     </.simple_form>
     </div>
@@ -59,11 +59,7 @@ defmodule SnkzWeb.ProductLive.BuyComponent do
     params =
       in_stock_params |> Map.merge(%{"user_id" => socket.assigns.current_user.id, "product_id" => socket.assigns.id})
 
-    save_in_stock(socket, socket.assigns.action, params)
-  end
-
-  defp save_in_stock(socket, :sell, in_stock_params) do
-    case Inventory.create_inventory_stock(in_stock_params) do
+    case Inventory.create_inventory_stock(params) do
       {:ok, in_stock} ->
         notify_parent({:saved, in_stock})
 

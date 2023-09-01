@@ -20,7 +20,7 @@ defmodule SnkzWeb.ProductLive.SellComponent do
       >
 
       <.input field={@form[:size]} type="select" options={["7", "8", "9", "10", "11", "12", "13", "14", "15"]} prompt="select" label="Size"/>
-      <.input field={@form[:color]} type="select" options={["red", "green", "blue"]} prompt="select" label="Color"/>
+      <.input field={@form[:color]} type="select" options={["white", "red", "black"]} prompt="select" label="Color"/>
         <.input field={@form[:price]} type="number" label="Price" />
         <.input field={@form[:user_id]} type="hidden" />
         <.input field={@form[:product_id]} type="hidden" />
@@ -67,11 +67,7 @@ defmodule SnkzWeb.ProductLive.SellComponent do
         "product_id" => socket.assigns.id
       })
 
-    save_in_stock(socket, socket.assigns.action, params)
-  end
-
-  defp save_in_stock(socket, :sell, in_stock_params) do
-    case Inventory.create_inventory_stock(in_stock_params) do
+    case Inventory.create_inventory_stock(params) do
       {:ok, in_stock} ->
         Phoenix.PubSub.broadcast(Snkz.PubSub, "product:#{in_stock.product_id}", {:in_stock_update, in_stock})
 

@@ -7,12 +7,12 @@
 
   <div class="flex flex-row justify-center">
     <div :for={image <- @product.images} class="w-20 h-20" phx-click={"select image"} phx-value-id={image.id}>
-      <img src={image.image_url} />
+        <img src={image.image_url} />
     </div>
   </div>
 </div>
 
-<div class="mb-10" >
+<div class="mb-10">
   <form phx-change="select size">
   <select
     name="size"
@@ -26,18 +26,20 @@
 
 <div class="grid grid-cols-2 gap-4">
   <.link patch={~p"/products/#{@product}/sell"} phx-click={JS.push_focus()} :if={@current_user}>
-    <.button class="shadow-[0_15px_5px_gray] w-full">Sell</.button>
+    <.button class="shadow-[0_5px_5px_gray] w-full">Sell</.button>
   </.link>
 
   <.button disabled="true" class="bg-zinc-500 hover:bg-zinc-500 w-full" :if={is_nil(@current_user)}>Sell</.button>
 
-  <.link patch={~p"/products/#{@product}/#{@in_stock}/buy"} phx-click={JS.push_focus()} :if={@in_stock && @current_user}>
-    <.button class="shadow-[0_15px_5px_gray] w-full">Buy</.button>
+  <.link patch={~p"/buy/#{@in_stock}"} phx-click={JS.push_focus()} :if={@in_stock && @current_user}>
+    <.button class="shadow-[0_5px_5px_gray] w-full">Buy</.button>
   </.link>
 
   <.button disabled="true" class="bg-zinc-500 hover:bg-zinc-500 w-full" :if={is_nil(@in_stock) || is_nil(@current_user)}>Buy</.button>
-
 </div>
+
+<p class="text-center text-zinc-700 text-xs mt-2" :if={is_nil(@current_user)}>Must be signed-in</p>
+
 <h1 class="mt-8 mb-4">
 Description
 </h1>

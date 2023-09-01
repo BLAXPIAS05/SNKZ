@@ -16,3 +16,32 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+------------------ ERD --------------------
+
+An "image" is an image of the shoe with color
+
+A "product" is the general shoe "model" without color
+
+An "in_stock" is a certain shoe that is for sale
+
+IMAGES ->---|- PRODUCT -|---<- IN_STOCK ->---|- USER
+
+Product = {
+  title,
+  description,
+  colors
+}
+
+Image = {
+  product,
+  color
+}
+
+In_stock = {
+  user,
+  color,
+  product,
+  size,
+  price
+}

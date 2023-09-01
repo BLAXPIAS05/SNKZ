@@ -59,7 +59,7 @@ product =
     title: "Air Force 1",
     description:
       "The Nike Air Force 1 is a classic and iconic sneaker that has been a staple in the world of streetwear and sneaker culture since its debut in 1982. Designed by Bruce Kilgore, it was the first basketball shoe to feature Nike's Air cushioning technology in the sole, providing exceptional comfort and support on and off the court. The Air Force 1 is known for its clean and timeless design, featuring a low-top or high-top silhouette with a prominent swoosh logo on the sides. Over the years, it has been released in a wide array of colorways, collaborations, and special editions, making it a versatile choice for casual wear and a canvas for artistic expression within sneaker customization. Its enduring popularity has solidified its status as an enduring symbol of sneaker culture and urban fashion.",
-    colors: ~w[white red]
+    colors: ~w[white red black]
   })
 
 _images =

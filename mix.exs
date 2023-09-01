@@ -51,7 +51,9 @@ defmodule Snkz.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:twix, github: "bratsche/twix"}
+      {:twix, github: "bratsche/twix"},
+      {:gringotts, "~> 1.1"},
+      {:ex_money, ">= 2.6.0"}
     ]
   end
 
