@@ -59,8 +59,10 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :gringotts, Gringotts.Gateways.Stripe,
-    secret_key: "your_secret_user_id"
+config :gringotts, Gringotts.Gateways.Monei,
+    userId: "5b85ae77-8322-46e6-9b2a-8cd76a56b190",
+    password: "pk_test_8096193e03751dd8c7413b5fe625763f",
+    entityId: "fab52a3cc3dd93ac1ff92ab84ab37a75833c5ff4"
 
 config :ex_cldr, default_backend: Snkz.Cldr
 

@@ -25,7 +25,7 @@ defmodule SnkzWeb.ProductLive.SellComponent do
         <.input field={@form[:user_id]} type="hidden" />
         <.input field={@form[:product_id]} type="hidden" />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Product</.button>
+          <.button phx-disable-with="Processing...">Sell</.button>
         </:actions>
       </.simple_form>
     </div>

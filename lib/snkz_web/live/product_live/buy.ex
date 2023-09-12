@@ -1,17 +1,17 @@
 defmodule SnkzWeb.ProductLive.Buy do
   use SnkzWeb, :live_view
 
-  alias Gringotts.Gateways.Stripe
+  alias Gringotts.Gateways.Monei
   alias Gringotts.CreditCard
 
   @empty_card %{
     "verification_code" => "123",
     "first_name" => "Harry",
     "last_name" => "Potter",
-    "number" => "4200000000000000",
+    "number" => "4444444444444414",
     "month" => 12,
     "brand" => "VISA",
-    "year" => 2099
+    "year" => 2034
   }
 
   @impl true
@@ -44,8 +44,8 @@ defmodule SnkzWeb.ProductLive.Buy do
       first_name: Map.get(params, "first_name"),
       last_name: Map.get(params, "last_name"),
       number: Map.get(params, "number"),
-      year: Map.get(params, "year"),
-      month: Map.get(params, "month"),
+      year: String.to_integer(Map.get(params, "year")),
+      month: String.to_integer(Map.get(params, "month")),
       verification_code: Map.get(params, "verification_code"),
       brand: Map.get(params, "brand")
     }
@@ -53,7 +53,7 @@ defmodule SnkzWeb.ProductLive.Buy do
     amount = Money.new(42, :USD)
 
     message =
-      case Gringotts.purchase(Stripe, amount, card) do
+      case Gringotts.purchase(Monei, amount, card) do
       {:ok, %{id: id}} ->
         "Payment authorized, reference token: '#{id}'"
 

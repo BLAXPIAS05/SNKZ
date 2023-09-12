@@ -2,6 +2,7 @@ defmodule SnkzWeb.ProductLive.Show do
   use SnkzWeb, :live_view
 
   alias Snkz.Products
+  import SnkzWeb.Size
 
   @impl true
   def mount(_params, _session, socket) do
@@ -35,18 +36,19 @@ defmodule SnkzWeb.ProductLive.Show do
     }
   end
 
+  @impl true
   def handle_info({:in_stock_update, in_stock}, socket) do
     IO.inspect(in_stock, label: "--------------------------------------")
 
     {:noreply, socket}
   end
 
-  def available_sizes(product, image) do
-    product.in_stock
-    |> Enum.filter(fn i -> i.color == image.color end)
-    |> Enum.map(fn i -> i.size end)
-    |> Enum.uniq()
-  end
+  # def available_sizes(product, image) do
+  #   product.in_stock
+  #   |> Enum.filter(fn i -> i.color == image.color end)
+  #   |> Enum.map(fn i -> i.size end)
+  #   |> Enum.uniq()
+  # end
 
   @impl true
   def handle_event("select image", %{"id" => id}, %{assigns: %{product: product}} = socket) do
