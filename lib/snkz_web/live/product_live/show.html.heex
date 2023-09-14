@@ -11,8 +11,12 @@
     phx-click="select image"
     phx-value-id={image.id}
   >
-    <.thumbnail thumb_url={image.image_url} main_url={@current_image.image_url}/>
-    <div class="absolute w-4 h-4 bg-red-500 rounded-full -top-2 -right-2" :if={@notifier && @notifier.color == image.color}></div>
+    <.thumbnail thumb_url={image.image_url} main_url={@current_image.image_url} />
+    <div
+      :if={@notifier && @notifier.color == image.color}
+      class="absolute w-4 h-4 bg-red-500 rounded-full -top-2 -right-2"
+    >
+    </div>
   </div>
 </div>
 
@@ -54,11 +58,11 @@
   Must be signed-in
 </p>
 
-<h1 class="mt-8 mb-4">
+<%!-- <h1 class="mt-8 mb-4">
   Description
-</h1>
+</h1> --%>
 
-<div>
+<div class="mt-8">
   <%= @product.description %>
 </div>
 
