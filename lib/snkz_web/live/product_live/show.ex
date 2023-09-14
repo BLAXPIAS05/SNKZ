@@ -3,6 +3,7 @@ defmodule SnkzWeb.ProductLive.Show do
 
   alias Snkz.Products
   import SnkzWeb.Size
+  import SnkzWeb.ProdThumb
 
   @impl true
   def mount(_params, _session, socket) do
@@ -33,6 +34,7 @@ defmodule SnkzWeb.ProductLive.Show do
      |> assign(:product, product)
      |> assign(:in_stock, in_stock)
      |> assign(:current_image, current_image)
+     |> assign(:notifier, nil)
     }
   end
 
@@ -40,7 +42,10 @@ defmodule SnkzWeb.ProductLive.Show do
   def handle_info({:in_stock_update, in_stock}, socket) do
     IO.inspect(in_stock, label: "--------------------------------------")
 
-    {:noreply, socket}
+    {:noreply,
+    socket
+    |> assign(:notifier, in_stock)
+  }
   end
 
   # def available_sizes(product, image) do
