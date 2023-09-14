@@ -3,6 +3,7 @@ defmodule SnkzWeb.ProductLive.Show do
 
   alias Snkz.Products
   import SnkzWeb.Size
+  import SnkzWeb.ProdThumb
 
   @impl true
   def mount(_params, _session, socket) do
@@ -33,14 +34,20 @@ defmodule SnkzWeb.ProductLive.Show do
      |> assign(:product, product)
      |> assign(:in_stock, in_stock)
      |> assign(:current_image, current_image)
-    }
+     |> assign(:notifier, nil)
+     |> assign(:action, nil)}
   end
 
   @impl true
-  def handle_info({:in_stock_update, in_stock}, socket) do
-    IO.inspect(in_stock, label: "--------------------------------------")
+  def handle_info({:in_stock_update, in_stock, action}, socket) do
+    if action == :end do
+      assign(socket, :notifier, nil)
+    end
 
-    {:noreply, socket}
+    {:noreply,
+     socket
+     |> assign(:notifier, in_stock)
+     |> assign(:action, action)}
   end
 
   # def available_sizes(product, image) do
@@ -52,27 +59,31 @@ defmodule SnkzWeb.ProductLive.Show do
 
   @impl true
   def handle_event("select image", %{"id" => id}, %{assigns: %{product: product}} = socket) do
-    image = Enum.find(product.images, fn i ->
-      to_string(i.id) == id
-    end)
+    image =
+      Enum.find(product.images, fn i ->
+        to_string(i.id) == id
+      end)
 
     {:noreply,
      socket
      |> assign(:current_image, image)
-     |> assign(:in_stock, nil)
-    }
+     |> assign(:in_stock, nil)}
   end
 
   @impl true
-  def handle_event("select size", %{"size" => size}, %{assigns: %{product: product, current_image: current_image}} = socket) do
-    in_stock = Enum.find(product.in_stock, fn i ->
-      to_string(i.size) == size && current_image.color == i.color
-    end)
+  def handle_event(
+        "select size",
+        %{"size" => size},
+        %{assigns: %{product: product, current_image: current_image}} = socket
+      ) do
+    in_stock =
+      Enum.find(product.in_stock, fn i ->
+        to_string(i.size) == size && current_image.color == i.color
+      end)
 
     {:noreply,
      socket
-     |> assign(:in_stock, in_stock)
-    }
+     |> assign(:in_stock, in_stock)}
   end
 
   defp page_title(:show), do: "Show Product"

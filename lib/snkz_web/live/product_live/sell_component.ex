@@ -69,7 +69,7 @@ defmodule SnkzWeb.ProductLive.SellComponent do
 
     case Inventory.create_inventory_stock(params) do
       {:ok, in_stock} ->
-        Phoenix.PubSub.broadcast(Snkz.PubSub, "product:#{in_stock.product_id}", {:in_stock_update, in_stock})
+        Phoenix.PubSub.broadcast(Snkz.PubSub, "product:#{in_stock.product_id}", {:in_stock_update, in_stock, :sell})
 
         {:noreply,
          socket
