@@ -115,7 +115,6 @@ _images =
 for {color, j1_image} <- j1_images do
   Repo.insert!(%Image{
     product_id: jordan_1.id,
-    image_url: j1_image,
     color: color
   })
 end
