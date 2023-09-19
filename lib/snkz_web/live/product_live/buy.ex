@@ -11,7 +11,7 @@ defmodule SnkzWeb.ProductLive.Buy do
     "number" => "4444444444444414",
     "month" => 12,
     "brand" => "VISA",
-    "year" => 2034
+    "year" => 34
   }
 
   @impl true
@@ -50,19 +50,19 @@ defmodule SnkzWeb.ProductLive.Buy do
       brand: Map.get(params, "brand")
     }
 
-    amount = Money.new(42, :USD)
+    amount = Money.new(42, :EUR)
 
     message =
-      case Gringotts.purchase(Monei, amount, card) do
-      {:ok, %{id: id}} ->
-        "Payment authorized, reference token: '#{id}'"
+      case Gringotts.purchase(Monei, amount, card, order_id: "TEST1234") do
+        {:ok, %{id: id}} ->
+          "Payment authorized, reference token: '#{id}'"
 
-      {:error, %{status_code: error, raw: raw_response}} ->
-        "Error: #{error}\nRaw:\n#{raw_response}"
+        {:error, %{status_code: error, raw: raw_response}} ->
+          "Error: #{error}\nRaw:\n#{raw_response}"
 
-      %{"error" => %{"message"=> message}} ->
-        message
-    end
+        %{"error" => %{"message" => message}} ->
+          message
+      end
 
     {:noreply,
      socket

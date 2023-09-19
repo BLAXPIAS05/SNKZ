@@ -52,7 +52,7 @@ defmodule Snkz.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:twix, github: "bratsche/twix"},
-      {:gringotts, "~> 1.1"},
+      {:gringotts, path: "/Users/reagan/projects/gringotts", override: true},
       {:ex_money, ">= 2.6.0"}
     ]
   end
