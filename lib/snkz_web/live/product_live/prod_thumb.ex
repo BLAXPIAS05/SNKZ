@@ -2,10 +2,11 @@ defmodule SnkzWeb.ProdThumb do
   use Phoenix.Component
 
   def thumbnail(%{thumb_url: url, main_url: url} = assigns) do
+    assigns = assign(assigns, :url, url)
     ~H"""
     <img
       class="outline outline-zinc-500 rounded-lg"
-      src={url}
+      src={@url}
     />
     """
   end

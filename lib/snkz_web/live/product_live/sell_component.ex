@@ -3,6 +3,8 @@ defmodule SnkzWeb.ProductLive.SellComponent do
 
   alias Snkz.Inventory
 
+  @notification_timeout 5000
+
   @impl true
   def render(assigns) do
     ~H"""
@@ -70,6 +72,7 @@ defmodule SnkzWeb.ProductLive.SellComponent do
     case Inventory.create_inventory_stock(params) do
       {:ok, in_stock} ->
         Phoenix.PubSub.broadcast(Snkz.PubSub, "product:#{in_stock.product_id}", {:in_stock_update, in_stock, :sell})
+        Process.send_after(self(), {:in_stock_update, in_stock, :end}, @notification_timeout)
 
         {:noreply,
          socket

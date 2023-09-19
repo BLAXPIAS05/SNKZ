@@ -4,6 +4,7 @@ defmodule SnkzWeb.ProductLive.Show do
   alias Snkz.Products
   import SnkzWeb.Size
   import SnkzWeb.ProdThumb
+  import SnkzWeb.Notifier
 
   @impl true
   def mount(_params, _session, socket) do
@@ -40,10 +41,6 @@ defmodule SnkzWeb.ProductLive.Show do
 
   @impl true
   def handle_info({:in_stock_update, in_stock, action}, socket) do
-    if action == :end do
-      assign(socket, :notifier, nil)
-    end
-
     {:noreply,
      socket
      |> assign(:notifier, in_stock)
