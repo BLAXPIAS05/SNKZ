@@ -3,6 +3,7 @@ defmodule SnkzWeb.ProductLive.Buy do
 
   alias Gringotts.Gateways.Monei
   alias Gringotts.CreditCard
+  alias Snkz.Inventory
 
   @empty_card %{
     "verification_code" => "123",
@@ -20,12 +21,17 @@ defmodule SnkzWeb.ProductLive.Buy do
   end
 
   @impl true
-  def handle_params(_params, _, socket) do
+  def handle_params(params, _, socket) do
     form = to_form(@empty_card)
+
+    stock_id = Map.get(params, "stock_id")
+
+    in_stock = Inventory.get_inventory_stock!(stock_id)
 
     {:noreply,
      socket
-     |> assign(:message, "ready")
+     |> assign(:in_stock, in_stock)
+     |> assign(:message, "")
      |> assign(:form, form)}
   end
 
@@ -50,22 +56,36 @@ defmodule SnkzWeb.ProductLive.Buy do
       brand: Map.get(params, "brand")
     }
 
-    amount = Money.new(42, :EUR)
+    in_stock = socket.assigns.in_stock
 
-    message =
-      case Gringotts.purchase(Monei, amount, card, order_id: "TEST1234") do
-        {:ok, %{id: id}} ->
-          "Payment authorized, reference token: '#{id}'"
+    amount = Money.new(in_stock.price, :EUR)
 
-        {:error, %{status_code: error, raw: raw_response}} ->
-          "Error: #{error}\nRaw:\n#{raw_response}"
+    time = DateTime.utc_now()
 
-        %{"error" => %{"message" => message}} ->
-          message
-      end
+    {microsecond, _} = time.microsecond
 
-    {:noreply,
-     socket
-     |> assign(:message, message)}
+    order_id = "#{time.year}" <> "#{time.month}" <> "#{time.day}" <> "#{time.hour}" <> "#{time.minute}" <>"#{time.second}" <> "#{microsecond}"
+
+    case Gringotts.purchase(Monei, amount, card, order_id: order_id) do
+      {:ok, %{id: id}} ->
+        "Payment authorized, reference token: '#{id}'"
+
+        {:noreply,
+          socket
+          |> put_flash(:info, "Thanks for your purchase. Your order id is:  #{order_id}")
+          |> push_navigate(to: ~p"/products/#{in_stock.product_id}")}
+
+      {:error, %{status_code: error}} ->
+
+        {:noreply,
+          socket
+          |> assign(:message, "Error: #{error}")}
+
+      %{"error" => %{"message" => message}} ->
+
+        {:noreply,
+          socket
+          |> assign(:message, message)}
+    end
   end
 end
